@@ -1,11 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nl.mprog.ourstreet.Activity_First_Time"
-    android:background="@color/navy" >
+    android:orientation="vertical"
+    android:background="#D3D3D3" >
+    
+    <TextView
+        android:id="@+id/prompt" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prompt"
+        android:layout_centerHorizontal="true"
+        android:textSize="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold" />
+    
+    	
+
+    <Button
+        android:id="@+id/manualinput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/authButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:text="@string/register" />
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/manualinput"
+        android:layout_below="@+id/prompt"
+        android:layout_marginTop="33dp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/authButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="or"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+    
 </RelativeLayout>

@@ -5,7 +5,7 @@
      >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/changestatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,5 +20,13 @@
         android:layout_alignLeft="@+id/button1"
         android:layout_marginBottom="54dp"
         android:text="@string/OnlineActivity" />
+
+    <Button
+        android:id="@+id/logoutbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Logout" />
 
 </RelativeLayout>

@@ -9,8 +9,11 @@ package com.nl.mprog.ourstreet;
 
 public final class Manifest {
     public static final class permission {
-        /**  Creating Permission to receive Google Maps 
+        /** 
+  IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
+  to match your app's package name + ".permission.C2D_MESSAGE".
+
          */
-        public static final String MAPS_RECEIVE="com.nl.mprog.ourstreet.permission.MAPS_RECEIVE";
+        public static final String C2D_MESSAGE="com.nl.mprog.ourstreet.permission.C2D_MESSAGE";
     }
 }

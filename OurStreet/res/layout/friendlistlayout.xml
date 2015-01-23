@@ -16,24 +16,30 @@
          android:text="No data"/>
 
     <Button
+        android:id="@+id/chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBaseline="@+id/requests"
+        android:layout_alignBottom="@+id/requests"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="39dp"
-        android:layout_marginBottom="14dp"
         android:text="@string/Chat" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/requests"
+        android:layout_alignBottom="@+id/requests"
+        android:layout_alignParentRight="true"
+        android:text="@string/Add" />
+
+    <Button
+        android:id="@+id/requests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="14dp"
-        android:layout_marginRight="39dp"
-        android:text="@string/Add" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="@string/requests" />
 
 </RelativeLayout>

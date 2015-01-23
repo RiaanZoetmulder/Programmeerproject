@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         >
+
+          <EditText
+              android:id="@+id/firstname"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentTop="true"
+              android:layout_marginTop="15dp"
+              android:ems="14"
+              android:hint="@string/firstname"
+              android:inputType="textCapWords" >
+
+              <requestFocus />
+          </EditText>
+
+          <EditText
+              android:id="@+id/lastname"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below= "@+id/firstname"
+              android:ems="14"
+              android:hint="@string/lastname"
+              android:inputType="textCapWords" />
+
+          <EditText
+              android:id="@+id/streetname"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/firstname"
+              android:layout_marginTop="37dp"
+              android:ems="10"
+              android:hint="@string/streetname"
+              android:inputType="textCapWords" />
+
+          <EditText
+              android:id="@+id/number"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/streetname"
+              android:ems="10"
+              android:hint="@string/number"
+              android:inputType="numberSigned" />
+
+          <Button
+              android:id="@+id/backbutton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentLeft="true"
+              android:text="@string/goback" />
+
+          <EditText
+              android:id="@+id/city"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/number"
+              android:ems="10"
+              android:hint="@string/city"
+              android:inputType="textCapWords" />
+
+          <EditText
+              android:id="@+id/password"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:ems="14"
+              android:hint="@string/password"
+              android:inputType="textPassword" />
+
+          <EditText
+              android:id="@+id/confirmpassword"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/password"
+              android:ems="14"
+              android:hint="@string/confirmpassword"
+              android:inputType="textPassword" />
+
+          <Button
+              android:id="@+id/done"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:text="@string/button" />
+
+</RelativeLayout>
+
+

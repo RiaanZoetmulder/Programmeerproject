@@ -23,32 +23,40 @@
     	android:paddingRight="5dp"
     	android:paddingBottom="2dp"
     	android:paddingTop="2dp" />
-    
+
     <Button
-        android:id="@+id/facebookbutton" 
+        android:id="@+id/manualinput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/facebook"
+        android:layout_below="@+id/authButton"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/prompt"/>
-    
+        android:layout_marginTop="64dp"
+        android:text="@string/register" />
+    <Button
+        android:id="@+id/loginbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manualinput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:text="@string/login" />
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prompt"
+        android:layout_centerHorizontal="true" />
+
     <TextView
-        android:id="@+id/or" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/or"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/facebookbutton"
-        android:fontFamily="sans-serif-medium"
-        />
-    
-    <Button 
-        android:id="@+id/manualinput" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text = "@string/register"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/or"/>
-    
+        android:id="@+id/userInfoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/prompt"
+        android:layout_below="@+id/loginbutton"
+        android:layout_marginLeft="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="invisible" />
     
 </RelativeLayout>

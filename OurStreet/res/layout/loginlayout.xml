@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView
+        android:id="@+id/loginheader" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:layout_centerHorizontal="true"
+        android:textSize="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/firstnamelogin "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/loginheader"
+        android:ems="14"
+        android:hint="@string/firstname"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/lastnamelogin "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/firstnamelogin "
+        android:ems="14"
+        android:hint="@string/lastname"
+        android:inputType="textCapWords" />
+        
+   
+
+        <requestFocus />
+    
+
+    <EditText
+        android:id="@+id/passwordlogin "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lastnamelogin "
+        android:ems="14"
+        android:hint="@string/loginpassword"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/passwordlogin "
+        android:text="@string/button" />
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.nl.mprog.ourstreet;
 
+import java.util.List;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -11,6 +13,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,63 +32,134 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/* Author: Riaan Zoetmulder
+ * Name: Displays Google map.
+ * 
+ * 
+ * Sources: http://stackoverflow.com/questions/19353255/how-to-put-google-maps-v2-on-a-fragment-using-viewpager
+*/
 public class MapFragment extends Fragment {
-	protected Activity mActivity;
-	MapView mapView;
-    GoogleMap map;
+	
+	private static View view;
+	private static GoogleMap mMap;
+	private Double[] latitude, longitude;
+	private static Double homelatitude, homelongitude;
+	private int lengthList;
+    
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.mapfragmentlayout, container, false);
-        // Gets the MapView from the XML layout and creates it
-
-        try {
-            MapsInitializer.initialize(getActivity());
-        } catch (Exception e) {
-            Log.e("Address Map", "Could not initialize google play", e);
+    	Parse.initialize(getActivity(), "3AGy1SAlrM5EzI6udBQTVlNnnGSF0QcB4xuoIBM6", "nhdQQiAfhz51oISQMXWsKD1kaOfhTcksafCUxxC6");
+       
+  
+        if (container == null) {
+            return null;
         }
-
-        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()) )
-        {
-            case ConnectionResult.SUCCESS:
-                Toast.makeText(getActivity(), "SUCCESS", Toast.LENGTH_SHORT).show();
-                mapView = (MapView) v.findViewById(R.id.map);
-                mapView.onCreate(savedInstanceState);
+        view = inflater.inflate(R.layout.mapfragmentlayout, container, false);
+                homelatitude = (Double) ParseUser.getCurrentUser().get("latitude");
+                homelongitude = (Double) ParseUser.getCurrentUser().get("longitude");
                 
-                // Gets to GoogleMap from the MapView and does initialization stuff
-                if(mapView!=null)
-                {
-                    map = mapView.getMap();
-                    map.getUiSettings().setMyLocationButtonEnabled(false);
-                    map.setMyLocationEnabled(true);
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-                    map.animateCamera(cameraUpdate);
-                }
-                break;
-            case ConnectionResult.SERVICE_MISSING: 
-                Toast.makeText(getActivity(), "SERVICE MISSING", Toast.LENGTH_SHORT).show();
-                break;
-            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED: 
-                Toast.makeText(getActivity(), "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
-                break;
-            default: Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
-        }
+                // collect data from friends
+                gatherData();
+                
+                // For setting up the MapFragment
+                setUpMapIfNeeded(); 
 
-        // Updates the location and zoom of the MapView
-
-        return v;
+        return view;
     }
 
-    
-   /* @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
-   
+
+	private void gatherData() {
+		// get locations from Users
+		 	final ParseQuery<ParseObject> query = ParseQuery.getQuery("Friends");
+			query.whereEqualTo("to", ParseUser.getCurrentUser().getUsername().toString());
+			query.whereEqualTo("accepted", "accepted");
+	        
+			// execute the query
+	     	query.findInBackground(new FindCallback<ParseObject>() {
+
+	     		@Override
+	     		public void done(List<ParseObject> arg0, ParseException arg1) {
+	     				
+	     				lengthList = arg0.size();
+	     				latitude = new Double[arg0.size()];
+	     				longitude = new Double[arg0.size()];
+	     				
+	     				// iterate over users
+	     				for (int i = 0; i < arg0.size(); i++){
+	     					
+	     					
+	     					
+	     					// get object from list and display the name
+	     					ParseObject friend = arg0.get(i);
+	     					latitude[i] = (Double)friend.get("latitude");
+	     					longitude[i] = (Double)friend.get("longitude");
+	     				}
+	     			}
+	     		});
+		
+	}
+
+
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the map.
+	    if (mMap == null) {
+	        // Try to obtain the map from the SupportMapFragment.
+	        mMap = ((SupportMapFragment) MainActivity.fragmentManager
+	                .findFragmentById(R.id.location_map)).getMap();
+	        // Check if we were successful in obtaining the map.
+	        if (mMap != null)
+	            setUpMap();
+	    }
+		
+	}
+
+
+	private void setUpMap() {
+		// For showing a move to my loction button
+	    mMap.setMyLocationEnabled(true);
+	    // For dropping a marker at a point on the Map
+	    mMap.addMarker(new MarkerOptions().position(new LatLng(homelatitude, homelongitude)).title("You").snippet("Adress"));
+	    
+	    if(latitude != null && longitude != null){
+	    	for (int j = 0; j < lengthList; j++ ){
+	    		mMap.addMarker(new MarkerOptions().position(new LatLng(latitude[j], longitude[j])).title("Neighbours").snippet("Adress"));
+	    	}
+	    }
+
+	    // For zooming automatically to the Dropped PIN Location
+	    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(homelatitude,
+	            homelongitude), 12.0f));
+		
+	}
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+	    // TODO Auto-generated method stub
+	    if (mMap != null)
+	        setUpMap();
+
+	    if (mMap == null) {
+	        // Try to obtain the map from the SupportMapFragment.
+	        mMap = ((SupportMapFragment) MainActivity.fragmentManager
+	                .findFragmentById(R.id.location_map)).getMap(); 
+	        // Check if we were successful in obtaining the map.
+	        if (mMap != null)
+	            setUpMap();
+	    }
+	}
+	@Override
+	public void onDestroyView() {
+	    super.onDestroyView();
+	    try{
+	    	if (mMap != null) {
+	    		MainActivity.fragmentManager.beginTransaction()
+	            	.remove(MainActivity.fragmentManager.findFragmentById(R.id.location_map)).commit();
+	    		mMap = null;
+	    }
+	    }catch(Exception e){
+	    	System.out.println(e.toString());
+	    }
+	}
 }
+
+ 

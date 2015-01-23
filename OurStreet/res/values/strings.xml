@@ -13,6 +13,26 @@
     <string name="Add">Add</string>
     <string name="Chat">Chat</string>
     <color name="navy">#0000D0</color>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="streetname">Street</string>
+    <string name="number">Number</string>
+    <string name="button">Done</string>
+    <string name="requests">Requests</string>
+    <string name="password">Set Password</string>
+    <string name="confirmpassword">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="loginpassword">Password</string>
+    <string name="search">Search</string>
+    <string name="searchbar">Type in name </string>
+    <string name="goback">Return </string>
+    <string name="accept">Accept </string>
+    <string name="deny">Deny </string>
+     <string name="city">City </string>
+    
+    
+    
+    
   
     <string name="Neighbours_title">Your Neighbours</string>
     <string-array name = "list">
@@ -27,5 +47,7 @@
         <item>person 9</item>
         
     </string-array>
+    <string name = "facebook_app_id"> 392671317567541 </string>    
+   
 
 </resources>

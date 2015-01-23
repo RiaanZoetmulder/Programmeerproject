@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 // Adapter for Viewpager
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 	private String[] tabnames = {"Map", "Status","Friends"};
+	private int size = 3;
 	
 	public CharSequence getPageTitle(int position){
 		return tabnames[position];
@@ -37,7 +38,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public int getCount()
     {
     	// return size of total number of Possible Fragments
-        return 3;
+        return size;
     }
 
 }
