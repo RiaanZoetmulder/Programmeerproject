@@ -22,7 +22,8 @@
         android:layout_alignBaseline="@+id/requests"
         android:layout_alignBottom="@+id/requests"
         android:layout_alignParentLeft="true"
-        android:text="@string/Chat" />
+        android:text="@string/Chat"
+        android:visibility ="gone" />
 
     <Button
         android:id="@+id/add"
@@ -38,8 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
+        android:layout_alignParentLeft="true"
         android:text="@string/requests" />
 
 </RelativeLayout>

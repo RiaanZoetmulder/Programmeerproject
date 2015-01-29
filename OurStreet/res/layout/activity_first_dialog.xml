@@ -11,52 +11,24 @@
         android:layout_height="wrap_content"
         android:text="@string/prompt"
         android:layout_centerHorizontal="true"
-        android:textSize="40dp"
-        android:fontFamily="sans-serif-medium"
+        android:textSize="40sp"
         android:textStyle="bold" />
-    <ImageView
-    	android:src="@android:drawable/divider_horizontal_dark"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:scaleType="fitXY"
-    	android:paddingLeft="5dp"
-    	android:paddingRight="5dp"
-    	android:paddingBottom="2dp"
-    	android:paddingTop="2dp" />
 
     <Button
         android:id="@+id/manualinput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/authButton"
+        android:layout_above="@+id/loginbutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
+        android:layout_marginBottom="62dp"
         android:text="@string/register" />
+
     <Button
         android:id="@+id/loginbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manualinput"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
+        android:layout_alignLeft="@+id/manualinput"
+        android:layout_centerVertical="true"
         android:text="@string/login" />
-
-    <com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/prompt"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/userInfoTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/prompt"
-        android:layout_below="@+id/loginbutton"
-        android:layout_marginLeft="20dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="invisible" />
     
 </RelativeLayout>

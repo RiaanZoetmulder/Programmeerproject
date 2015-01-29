@@ -1,5 +1,11 @@
 package com.nl.mprog.ourstreet;
 
+/* Author: Riaan Zoetmulder
+ * Project: Ourstreet			Date: 27-01-2015
+ * Description: Activity that allows the user to Log in to the 
+ * App using his first and lastname and a chosen password
+ * 
+*/
 import com.parse.LogInCallback;
 
 import com.parse.Parse;
@@ -8,7 +14,6 @@ import com.parse.ParseUser;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,8 +22,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Login extends Activity {
-	// shared preferences
-	public static final String PREFS_NAME = "MyPrefsFile";
 	
 	// create textfield and button variables
 	private EditText mFirstname;
@@ -50,7 +53,6 @@ public class Login extends Activity {
 		password = mPassword.getText().toString();
 		fullname = firstname + " " + lastname;
 		
-		ParseUser.logOut();
 		
 		
 		mLogin.setOnClickListener(new OnClickListener(){
@@ -76,35 +78,32 @@ public class Login extends Activity {
 						
 						if (arg1 != null) {
 							
-							
 						    // Show the error message
 						    Toast.makeText(Login.this, arg1.toString(), 
 						      Toast.LENGTH_LONG).show();
-						  } else {
-							  
-							SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-							SharedPreferences.Editor editor = settings.edit();
+						    
+						  } else if (ParseUser.getCurrentUser() != null) {
 							
-							
-							// store user data in sharedpreferences
-							editor.putString("thefirstname", firstname);
-		            		editor.putString("thelastname", lastname);
-						 	editor.putString("thestreetname", arg0.get("streetname").toString());
-						 	editor.putInt("thenumber", Integer.parseInt(arg0.get("housenumber").toString()));
-						 	
-						 	editor.commit();
-							
-							  
 							  
 						    // Start an intent for the dispatch activity
 						    Intent intent = new Intent(Login.this, MainActivity.class);
 						    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | 
 						      Intent.FLAG_ACTIVITY_NEW_TASK);
 						    
-						    Toast.makeText(Login.this, arg0.getUsername(), 
+						    // Greet User 
+						    Toast.makeText(Login.this, "Welcome " + arg0.getUsername(), 
 								      Toast.LENGTH_LONG).show();
 						    startActivity(intent);
+						    
+						  } else{
+							  
+							  // Most likely an internet error
+							  // Inform the user about this
+							  Toast.makeText(Login.this, "Internet error: Please Connect", 
+								      Toast.LENGTH_LONG).show();
+							  
 						  }
+						  
 					}
 				});
 			}

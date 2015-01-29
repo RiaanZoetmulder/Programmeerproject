@@ -1,5 +1,14 @@
 package com.nl.mprog.ourstreet;
 
+/* Author: Riaan Zoetmulder
+ * Project: Ourstreet			Date: 27-01-2015
+ * Description: This activity allows users to look check which neighbours
+ * have made a friendrequest
+ * 
+ * 
+ * Sources: http://stackoverflow.com/questions/19353255/how-to-put-google-maps-v2-on-a-fragment-using-viewpager
+*/
+
 import java.util.List;
 
 import com.parse.FindCallback;
@@ -14,36 +23,38 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class RequestList extends Activity {
 	
-	
+	// create listview, object to store listitems
+	// and an integer to remember position of selected
+	// listitem
 	private ListView listview;
 	List<ParseObject> tempList;
 	private int selectedListItem;
 	
+	// declare the buttons
 	private Button accept;
 	private Button deny;
 	private Button goBack;
 	
-	
+	// create object for joined table
 	private ParseObject linkBack;
 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.requestlistlayout);
-		Parse.initialize(this, "3AGy1SAlrM5EzI6udBQTVlNnnGSF0QcB4xuoIBM6", "nhdQQiAfhz51oISQMXWsKD1kaOfhTcksafCUxxC6");
+		Parse.initialize(this, "3AGy1SAlrM5EzI6udBQTVlNnnGSF0QcB4xuoIBM6", 
+				"nhdQQiAfhz51oISQMXWsKD1kaOfhTcksafCUxxC6");
 		
 		// set Adapter
-		final ArrayAdapter<CharSequence> listAdapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_list_item_1);
+		final ArrayAdapter<CharSequence> listAdapter = 
+				new ArrayAdapter<CharSequence>(this, android.R.layout.simple_list_item_1);
 		listview = (ListView)findViewById(android.R.id.list);
 		listview.setAdapter(listAdapter);
 		
@@ -63,13 +74,16 @@ public class RequestList extends Activity {
 				
 				// save the list of requests in a seperate list
 				tempList = arg0;
-				
-				// iterate over users
-				for (int i = 0; i < arg0.size(); i ++){
+				try{
+					// iterate over users
+					for (int i = 0; i < arg0.size(); i ++){
 					
-					// get object from list and display the name
-					ParseObject friend = arg0.get(i);
-					listAdapter.add(friend.get("from").toString());
+						// get object from list and display the name
+						ParseObject friend = arg0.get(i);
+						listAdapter.add(friend.get("from").toString());
+					}
+				}catch(Exception e){
+					
 				}
 			}
 		});
@@ -144,14 +158,14 @@ public class RequestList extends Activity {
 					ParseObject friend = tempList.get(selectedListItem);
 					listAdapter.remove(friend.get("from").toString());
 					
-					//TODO: updatelist method. 
-					
 					// ensure item is deselected
 					selectedListItem= -1;
 					
 				}
 			}
 		});
+		
+		// return button
 		goBack = (Button) findViewById(R.id.back);
 		goBack.setOnClickListener(new OnClickListener(){
 

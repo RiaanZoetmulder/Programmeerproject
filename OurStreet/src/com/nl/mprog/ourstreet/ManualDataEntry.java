@@ -1,5 +1,14 @@
 package com.nl.mprog.ourstreet;
 
+/* Author: Riaan Zoetmulder
+ * Project: Ourstreet			Date: 27-01-2015
+ * Description: Creates a user in the database, allows the user to 
+ * type in their adress name etc. and a password.
+ * 
+ * 
+ * 
+*/
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -19,22 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/*Class: ManualDataEntru
- * Purpose: to collect data if a user doesn't have facebook
- * to implement:
- * - Sharedprefs
- * - write to database
- * - errorchecken so it doesn't crash when textfields are empty
- * - nicer layout
- * - additional textfields
- * 
- * 
-*/
 public class ManualDataEntry extends Activity {
 	 
-	 
-	 
-	
 	// defining EditTexts and Button
 	private EditText mFirstname;
 	private EditText mLastname;
@@ -54,6 +49,8 @@ public class ManualDataEntry extends Activity {
 	private String password;
 	private String city;
 	private String confirmPassword;
+	private Double latitude;
+	private Double longitude;
 	
 	private boolean succesfulSignup;
 	
@@ -87,49 +84,76 @@ public class ManualDataEntry extends Activity {
 		            {
 		            	
 		            	// call savedata method
-		            	savedata();
+		            	try{
+		            		savedata();
+		            	}catch(Exception e){
+		            		
+		            	}
+		            	
 		            	
 		            	if (succesfulSignup == true){
 		            		
-		            		Intent i = new Intent(ManualDataEntry.this,Activity_First_Time.class);
+		            		Intent i = new Intent(ManualDataEntry.this,FirstActivity.class);
 			            	startActivity(i);
 			            		
+			            	// succesful signup is true thus log them out
+			            	// gives the database time to refresh
+			            	ParseUser.getCurrentUser();
+							ParseUser.logOut();	
+							
 			            	// finish current activity to save 
 			            	finish();
+
 		            	}	
 		            }
 		            
-
 					private void savedata() {
 						
 						// initialize variables
 		            	firstname = mFirstname.getText().toString();
 		            	lastname = mLastname.getText().toString();
 		            	streetname = mStreetname.getText().toString();
-		            	number =  Integer.parseInt(mNumber.getText().toString());
+		            	
+		            	// see if int is valid before using it
+		            	try{
+		            		
+		            		number =  Integer.parseInt(mNumber.getText().toString());
+		            	
+		            	}catch(Exception e){
+		            		number = -1;
+		            		
+		            	}
+		            	
 		            	password = mPassword.getText().toString();
 		            	confirmPassword = mConfirmPassword.getText().toString();
 		            	city = mCity.getText().toString();
 		            	
-		            	Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-		            	String textToSearch = streetname + " " + number + ", " + city;
+		            	final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+		            	final String textToSearch = streetname + " " + number + ", " + city;
 		            	List<Address> fromLocationName = null;
 		            	
 		            	try {
 							fromLocationName = geocoder.getFromLocationName(textToSearch,   1);
 						} catch (IOException e1) {
 							e1.printStackTrace();
+							
 						}
-		            	
-		            	Double latitude = fromLocationName.get(0).getLatitude();
-		            	Double longitude = fromLocationName.get(0).getLongitude();
+		            	if (fromLocationName != null){
+		            		latitude = fromLocationName.get(0).getLatitude();
+		            		longitude = fromLocationName.get(0).getLongitude();
+		            	}else{
+		            		Toast.makeText(ManualDataEntry.this,"cannot geocode, check all the fields and your internet", Toast.LENGTH_LONG)
+		                    .show();
+		            		
+		            	}
 		            
-		            	
-		            	// if not null go to viewpager
+		            	// if not null go back to login
 		            	if (firstname.length() > 0 && lastname.length() > 0
 		            			&& streetname.length() > 0 && number != null 
-		            			&& password.equals(confirmPassword) && password.length() > 0){
-		            		
+		            			&& password.equals(confirmPassword) && password.length() > 0
+		            			&& city.length() > 0 && number >= 0 && latitude != null
+		            			&& longitude != null){
+		            		try{
 		            		// Load to parse.com
 		            		ParseUser user = new ParseUser();
 		            		user.setUsername(firstname + " " + lastname);
@@ -145,20 +169,22 @@ public class ManualDataEntry extends Activity {
 		            			@Override
 								public void done(ParseException e) {
 									if (e == null) {
-										Toast.makeText(getApplicationContext(), "No error in signing up",
+										Toast.makeText(getApplicationContext(), "Please, login now!",
 												Toast.LENGTH_LONG).show();
-			            			      // Hooray! Let them use the app now.
+			            			    
 			            			    } else {
-			            			      // Sign up didn't succeed. Look at the ParseException
-			            			      // to figure out what went wrong
+			            			    	
+			            			  
 			            			    }
 		            			}
 		            			
 		            		});
-		            		ParseUser.logOut();		            		
-
+		            		            		
 		            		// report a succesful signup
 		            		succesfulSignup = true;
+		            		}catch(Exception e){
+		            			
+		            		}
 		            		
 		            	}else{
 		            		// uh-oh something went wrong!
@@ -167,6 +193,8 @@ public class ManualDataEntry extends Activity {
 		            	}
 					}
 		        });
+		
+		// return to the first screen
 		mBackButton.setOnClickListener(new View.OnClickListener(){
 
 			@Override

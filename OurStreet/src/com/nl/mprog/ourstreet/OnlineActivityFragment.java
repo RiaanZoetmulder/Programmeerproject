@@ -23,11 +23,14 @@ import android.widget.Button;
 public class OnlineActivityFragment extends Fragment {
 	protected Activity mActivity;
 	
+	// for future queries
 	private ParseQuery<ParseObject> query;
 	
+	// for the logout and status button
 	private Button logoutButton;
 	private Button statusButton;
 	
+	// check if user status is online
 	private boolean online;
  
     @Override
@@ -52,8 +55,10 @@ public class OnlineActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-    	Parse.initialize(getActivity(), "3AGy1SAlrM5EzI6udBQTVlNnnGSF0QcB4xuoIBM6", "nhdQQiAfhz51oISQMXWsKD1kaOfhTcksafCUxxC6");
-        View view = inflater.inflate(R.layout.onlineactivitylayout, container, false);
+    	Parse.initialize(getActivity(), "3AGy1SAlrM5EzI6udBQTVlNnnGSF0QcB4xuoIBM6",
+    			"nhdQQiAfhz51oISQMXWsKD1kaOfhTcksafCUxxC6");
+        View view = inflater.inflate(R.layout.onlineactivitylayout,
+        		container, false);
         
         // set online to default "false"
         online = false;
@@ -74,22 +79,31 @@ public class OnlineActivityFragment extends Fragment {
 					public void done(List<ParseObject> arg0, ParseException arg1) {
 						
 						if(online == false){
-							// iterate through list and change status to online
-							for(int l = 0; l < arg0.size(); l++){
-								ParseObject link = arg0.get(l);
-								link.put("status", "online");
-								link.saveInBackground();
-								online = true;
+							try{
+								// iterate through list and change status to online
+								for(int l = 0; l < arg0.size(); l++){
+									ParseObject link = arg0.get(l);
+									link.put("status", "online");
+									link.saveInBackground();
+									online = true;
 							
+								}
+							}catch (Exception e){
+								
 							}
 						}else{
-							// iterate through list and change status to offline
-							for(int l = 0; l < arg0.size(); l++){
-								ParseObject link = arg0.get(l);
-								link.put("status", "offline");
-								link.saveInBackground();
-								online = false;
-						}
+							try{ 
+								
+								// iterate through list and change status to offline
+								for(int l = 0; l < arg0.size(); l++){
+									ParseObject link = arg0.get(l);
+									link.put("status", "offline");
+									link.saveInBackground();
+									online = false;
+								}
+							}catch(Exception e){
+								
+							}
 					}
 					}
 				});
@@ -102,17 +116,55 @@ public class OnlineActivityFragment extends Fragment {
         	
         	  public void onClick(View v) {
         		  
-        		//TODO: set status to offline.
+        		// set status to offline
+        		try{
+        			
+        			setToOffline();
         	    
-        	    Intent intent = new Intent(getActivity(), Activity_First_Time.class);
+        		}catch(Exception e){
+        			
+        		}
+        		  
+        		// logout and return to login screen
+        	    Intent intent = new Intent(getActivity(), FirstActivity.class);
         	    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         	    startActivity(intent);
-        	    ParseUser.logOut();
+        	    ParseUser.getCurrentUser();
+				ParseUser.logOut();
         	    getActivity().finish();
         	  }
+
+			private void setToOffline() {
+				
+				// start a query
+				query = ParseQuery.getQuery("Friends");
+				query.whereContains("from", ParseUser.getCurrentUser().getUsername());
+				
+				query.findInBackground(new FindCallback<ParseObject>(){
+
+					@Override
+					public void done(List<ParseObject> arg0, ParseException arg1) {
+						
+						try{
+							
+							// iterate through list and change status to online
+							for(int l = 0; l < arg0.size(); l++){
+								ParseObject link = arg0.get(l);
+								link.put("status", "offline");
+								link.saveInBackground();
+							
+							}
+							
+						}catch(Exception e){
+							
+						}
+
+					}
+					
+				});
+        		}
         	});
         
         return view;
     }
-
 }
