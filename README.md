@@ -1,4 +1,9 @@
 Programmeerproject
 ==================
-Project naam: OurStreet
-Lead Developer: CEO CFO CTO President Koning Riaan Zoetmulder
+Project name: OurStreet 
+
+Lead Developer: Riaan Zoetmulder
+
+"all right reserved"
+
+all materials contained in this repository are owned by Riaan Zoetmulder.
