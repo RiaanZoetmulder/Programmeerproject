@@ -30,6 +30,8 @@
     <string name="deny">Deny </string>
      <string name="city">City </string>
     <string name="Neighbours_title">Your Neighbours</string>
+    <string name="status">Online/Offline</string>
+    <string name="logout">Logout</string>
     
    
 

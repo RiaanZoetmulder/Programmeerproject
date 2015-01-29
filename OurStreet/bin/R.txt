@@ -546,7 +546,7 @@ int drawable ic_plusone_standard_off_client 0x7f020080
 int drawable ic_plusone_tall_off_client 0x7f020081
 int drawable powered_by_google_dark 0x7f020082
 int drawable powered_by_google_light 0x7f020083
-int id accept 0x7f0c0099
+int id accept 0x7f0c0098
 int id action_bar 0x7f0c0050
 int id action_bar_activity_content 0x7f0c0003
 int id action_bar_container 0x7f0c004f
@@ -560,7 +560,7 @@ int id action_menu_presenter 0x7f0c0006
 int id action_mode_bar 0x7f0c004d
 int id action_mode_bar_stub 0x7f0c004c
 int id action_mode_close_button 0x7f0c003f
-int id action_settings 0x7f0c009a
+int id action_settings 0x7f0c0099
 int id activity_chooser_view_content 0x7f0c0040
 int id add 0x7f0c0083
 int id adjust_height 0x7f0c0029
@@ -568,14 +568,13 @@ int id adjust_width 0x7f0c002a
 int id always 0x7f0c001f
 int id authButton 0x7f0c0060
 int id authbutton 0x7f0c0061
-int id back 0x7f0c0098
+int id back 0x7f0c0097
 int id backbutton 0x7f0c008f
 int id beginning 0x7f0c0026
 int id book_now 0x7f0c0036
 int id bottom 0x7f0c000f
 int id box_count 0x7f0c000c
 int id button 0x7f0c000d
-int id button1 0x7f0c0095
 int id buyButton 0x7f0c0033
 int id buy_now 0x7f0c0037
 int id buy_with_google 0x7f0c0038
@@ -614,7 +613,7 @@ int id com_facebook_usersettingsfragment_profile_name 0x7f0c007f
 int id confirmpassword 0x7f0c0092
 int id decor_content_parent 0x7f0c004e
 int id default_activity_button 0x7f0c0043
-int id deny 0x7f0c0097
+int id deny 0x7f0c0096
 int id dialog 0x7f0c0024
 int id disableHome 0x7f0c0018
 int id donate_with_google 0x7f0c0039
@@ -646,7 +645,7 @@ int id list_item 0x7f0c0044
 int id location_map 0x7f0c0093
 int id loginbutton 0x7f0c0063
 int id loginheader 0x7f0c0084
-int id logoutbutton 0x7f0c0096
+int id logoutbutton 0x7f0c0095
 int id manualinput 0x7f0c005f
 int id match_parent 0x7f0c0035
 int id middle 0x7f0c0028
@@ -850,6 +849,7 @@ int string goback 0x7f080067
 int string lastname 0x7f08005c
 int string login 0x7f080063
 int string loginpassword 0x7f080064
+int string logout 0x7f08006c
 int string number 0x7f08005e
 int string or 0x7f080057
 int string password 0x7f080061
@@ -858,6 +858,7 @@ int string register 0x7f080054
 int string requests 0x7f080060
 int string search 0x7f080065
 int string searchbar 0x7f080066
+int string status 0x7f08006b
 int string store_picture_message 0x7f08002e
 int string store_picture_title 0x7f08002d
 int string streetname 0x7f08005d

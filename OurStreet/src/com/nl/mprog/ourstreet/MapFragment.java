@@ -13,6 +13,7 @@ import java.util.List;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
@@ -36,10 +37,11 @@ public class MapFragment extends Fragment {
 	
 	// create variables for user and friends location
 	private Double[] latitude, longitude;
-	private static Double homelatitude, homelongitude;
+	private static Double homeLatitude, homeLongitude;
 	
-	// store length of friendlist
+	// store length of friendlist and friendlist
 	private int lengthList;
+	private String[] friendList;
     
     
     @Override
@@ -54,8 +56,8 @@ public class MapFragment extends Fragment {
         if (ParseUser.getCurrentUser() != null){
         	
         		// get location user's home
-                homelatitude = (Double) ParseUser.getCurrentUser().get("latitude");
-                homelongitude = (Double) ParseUser.getCurrentUser().get("longitude");
+                homeLatitude = (Double) ParseUser.getCurrentUser().get("latitude");
+                homeLongitude = (Double) ParseUser.getCurrentUser().get("longitude");
         }
                 
                 // collect data from friends
@@ -83,6 +85,7 @@ public class MapFragment extends Fragment {
 	     					lengthList = arg0.size();
 	     					latitude = new Double[arg0.size()];
 	     					longitude = new Double[arg0.size()];
+	     					friendList = new String[arg0.size()];
 	     				
 	     					// iterate over users
 	     					for (int i = 0; i < arg0.size(); i++){
@@ -91,6 +94,7 @@ public class MapFragment extends Fragment {
 	     						ParseObject friend = arg0.get(i);
 	     						latitude[i] = (Double)friend.get("latitude");
 	     						longitude[i] = (Double)friend.get("longitude");
+	     						friendList[i] = (String)friend.get("from");
 	     					}
 	     				}catch(Exception e){
 	     					
@@ -122,21 +126,29 @@ public class MapFragment extends Fragment {
 		// For showing a move to my loction button
 	    mMap.setMyLocationEnabled(true);
 	    
+	    try{
 	    // For dropping a marker at a point on the Map for users location
-	    mMap.addMarker(new MarkerOptions().position(new LatLng(homelatitude, homelongitude)).title("You").snippet("Adress"));
+	    mMap.addMarker(new MarkerOptions().position(new LatLng(homeLatitude, homeLongitude)).title("You").snippet("Adress")
+	    		.icon(BitmapDescriptorFactory
+				.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+	    
 	    
 	    // drops several markers 
 	    // if you have any friends
 	    if(latitude != null && longitude != null){
 	    	for (int j = 0; j < lengthList; j++ ){
-	    		mMap.addMarker(new MarkerOptions().position(new LatLng(latitude[j], longitude[j])).title("Neighbours").snippet("Adress"));
+	    		mMap.addMarker(new MarkerOptions().position(new LatLng(latitude[j], longitude[j])).title(friendList[j])
+	    				.snippet("Adress").icon(BitmapDescriptorFactory
+	    						.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 	    	}
 	    }
 
 	    // For zooming automatically to the Dropped PIN Location
-	    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(homelatitude,
-	            homelongitude), 12.0f));
-		
+	    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(homeLatitude,
+	            homeLongitude), 16.0f));
+	    }catch(Exception e){
+	    	
+	    }
 	}
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {

@@ -11,15 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="112dp"
-        android:text="Online/Offline" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_marginBottom="54dp"
-        android:text="@string/OnlineActivity" />
+        android:text="@string/status" />
 
     <Button
         android:id="@+id/logoutbutton"
@@ -27,6 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Logout" />
+        android:text="@string/logout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/changestatus"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
+        android:text="@string/OnlineActivity" />
 
 </RelativeLayout>
